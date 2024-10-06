@@ -1,4 +1,3 @@
-```markdown
 # How to Install Dawarich on a Synology NAS with Container Manager
 
 ## 1. Create the Directories
