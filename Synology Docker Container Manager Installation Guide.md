@@ -8,7 +8,7 @@
   - `gem_cache`
   - `public`
   - `shared_data`
-    - `watched`
+  - `watched`
 
 ## 2. Set Up the Dawarich Project in Container Manager
 1. Open **Container Manager**.
