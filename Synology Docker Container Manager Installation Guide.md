@@ -42,11 +42,16 @@ ports:
 Keep the second `3000` unchanged, as Dawarich always listens on this port.
 
 If you want to access your Dawarich from outside your local network, you have to set up a reverse proxy. You will also need to change the compose.yml file. Before clicking **Next**, go first to point 5.
+![02 create project](https://github.com/Tazmanian79/dawarich/blob/main/02.%20create%20project.png)
 
-7. Click **Next**  
-8. Click **Complete**
+7. Click **Next**
+![03 create project](https://github.com/Tazmanian79/dawarich/blob/main/03.%20create%20project.png)
+
+9. Click **Complete**
+![04 create project](https://github.com/Tazmanian79/dawarich/blob/main/04.%20create%20project.png)
 
 Your Synology NAS will now download and install all necessary files. Depending on your NAS model, this process might take a while. Wait at least 10 minutes to ensure everything is set up correctly. Once done, your project should appear in Container Manager.
+![05 project created](https://github.com/Tazmanian79/dawarich/blob/main/05.%20project%20created%20and%20started.png)
 
 ## 3. Access Dawarich
 Open your browser and go to:  
@@ -57,7 +62,7 @@ Follow the on-screen instructions to complete the Dawarich setup.
 Since Dawarich is still in beta, expect frequent updates (some may include breaking changes). When an update is available, you will be notified in **Container Manager**. Simply click **Update** and allow the update process to finish. Once it's done, you can log in again and continue using Dawarich.
 
 ## 5. How to Set Up a Reverse Proxy
-If you want to access your Dawarich from outside your local network, you need to set up a Reverse Proxy. If you don’t know what a reverse proxy is, visit [this guide](link-to-reverse-proxy-guide) for assistance in setting it up.
+If you want to access your Dawarich from outside your local network, you need to set up a Reverse Proxy. If you don’t know what a reverse proxy is, visit [this guide](https://mariushosting.com/synology-how-to-use-reverse-proxy-on-dsm-7/) for assistance in setting it up.
 
 If you have set up the reverse proxy according to the guide, you only need to add your domain (for example, mynas.mydomain.com) to `compose.yaml`.  
 Search for:
@@ -75,5 +80,5 @@ APPLICATION_HOSTS: localhost,mynas.mydomain.com
 You need to make this change twice: once for `dawarich_app:` and once for `dawarich_sidekiq:`.
 
 ## Credits
-The `compose.yaml` file was co-created by Zandhaas from the Synology Forum.
+The `compose.yaml` file was co-created by [Zandhaas](https://www.synology-forum.nl/profile/?u=8328) from the [Synology Forum](https://www.synology-forum.nl/).
 ```
