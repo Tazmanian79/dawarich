@@ -17,7 +17,7 @@
    - Name the project: `dawarich`
    - Path: `docker\dawarich`
    - Source: Select **docker-compose.yml** upload
-4. **Download** [this file](link-to-docker-compose-file) to your PC.
+4. **Download** [this file](compose.yaml) to your PC.
 5. Click **Browse** and select the `docker-compose.yml` file you just downloaded.
 6. Click **Next**.
 
