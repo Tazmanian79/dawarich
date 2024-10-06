@@ -42,15 +42,19 @@ ports:
 Keep the second `3000` unchanged, as Dawarich always listens on this port.
 
 If you want to access your Dawarich from outside your local network, you have to set up a reverse proxy. You will also need to change the compose.yml file. Before clicking **Next**, go first to point 5.
+
 ![02 create project](https://github.com/Tazmanian79/dawarich/blob/main/02.%20create%20project.png)
 
 7. Click **Next**
+
 ![03 create project](https://github.com/Tazmanian79/dawarich/blob/main/03.%20create%20project.png)
 
 9. Click **Complete**
+
 ![04 create project](https://github.com/Tazmanian79/dawarich/blob/main/04.%20create%20project.png)
 
 Your Synology NAS will now download and install all necessary files. Depending on your NAS model, this process might take a while. Wait at least 10 minutes to ensure everything is set up correctly. Once done, your project should appear in Container Manager.
+
 ![05 project created](https://github.com/Tazmanian79/dawarich/blob/main/05.%20project%20created%20and%20started.png)
 
 ## 3. Access Dawarich
