@@ -1,0 +1,133 @@
+version: '3'
+networks:
+  dawarich:
+services:
+  dawarich_redis:
+    image: redis:7.0-alpine
+    container_name: dawarich_redis
+    command: redis-server
+    restart: unless-stopped
+    networks:
+      - dawarich
+    volumes:
+      - shared_data:/var/shared/redis
+
+  dawarich_db:
+    image: postgres:14.2-alpine
+    container_name: dawarich_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - shared_data:/var/shared
+    networks:
+      - dawarich
+
+  dawarich_app:
+    image: freikin/dawarich:latest
+    container_name: dawarich_app
+    depends_on:
+      - dawarich_db
+      - dawarich_redis
+    volumes:
+      - gem_cache:/usr/local/bundle/gems
+      - public:/var/app/public
+      - watched:/var/app/tmp/imports/watched
+    networks:
+      - dawarich
+    ports:
+      - 3000:3000
+    stdin_open: true
+    tty: true
+    entrypoint: dev-entrypoint.sh
+    command: ['bin/dev']
+    restart: unless-stopped
+    environment:
+      RAILS_ENV: development
+      REDIS_URL: redis://dawarich_redis:6379/0
+      DATABASE_HOST: dawarich_db
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: password
+      DATABASE_NAME: dawarich_development
+      MIN_MINUTES_SPENT_IN_CITY: 60
+      APPLICATION_HOSTS: localhost
+      TIME_ZONE: Europe/Brussels
+      APPLICATION_PROTOCOL: http
+      REVERSE_GEOCODING_ENABLED: true
+      DISTANCE_UNIT: km
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "5"
+
+  dawarich_sidekiq:
+    image: freikin/dawarich:latest
+    container_name: dawarich_sidekiq
+    volumes:
+      - gem_cache:/usr/local/bundle/gems
+      - public:/var/app/public
+      - watched:/var/app/tmp/imports/watched
+    networks:
+      - dawarich
+    stdin_open: true
+    tty: true
+    entrypoint: dev-entrypoint.sh
+    command: ['sidekiq']
+    restart: unless-stopped
+    environment:
+      RAILS_ENV: development
+      REDIS_URL: redis://dawarich_redis:6379/0
+      DATABASE_HOST: dawarich_db
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: password
+      DATABASE_NAME: dawarich_development
+      APPLICATION_HOSTS: localhost
+      BACKGROUND_PROCESSING_CONCURRENCY: 10
+      RAILS_MAX_THREADS: 5
+      APPLICATION_PROTOCOL: http
+      REVERSE_GEOCODING_ENABLED: true
+      DISTANCE_UNIT: km
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "5"
+    depends_on:
+      - dawarich_db
+      - dawarich_redis
+      - dawarich_app
+
+volumes:
+  db_data:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /volume1/docker/dawarich/db_data
+      o: bind
+  gem_cache:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /volume1/docker/dawarich/gem_cache
+      o: bind
+  shared_data:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /volume1/docker/dawarich/shared_data
+      o: bind
+  public:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /volume1/docker/dawarich/public
+      o: bind
+  watched:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+       type: none
+       device: /volume1/docker/dawarich/watched
+       o: bind
