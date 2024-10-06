@@ -10,6 +10,7 @@
   - `shared_data`
   - `watched`
 
+
 ![create the directories](https://github.com/Tazmanian79/dawarich/blob/main/01.%20create%20directories.png)
 
 ## 2. Set Up the Dawarich Project in Container Manager
